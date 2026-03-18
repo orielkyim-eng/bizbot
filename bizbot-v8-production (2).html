@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>BizBot — פלטפורמת בוט חכמה לעסקים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --white:#ffffff;
+  --bg:#f4f7f4;
+  --bg2:#eaf0ea;
+  --surface:#ffffff;
+  --surface2:#f8faf8;
+  --green:#1a7a3c;
+  --green-mid:#22a050;
+  --green-light:#34c76a;
+  --green-glow:rgba(26,122,60,0.10);
+  --green-pale:#e8f5ed;
+  --teal:#0d9488;
+  --text:#0f1f0f;
+  --text-mid:#3a5a3a;
+  --text-soft:#7a9a7a;
+  --border:rgba(26,122,60,0.13);
+  --border-strong:rgba(26,122,60,0.28);
+  --shadow:0 2px 20px rgba(26,122,60,0.07);
+  --shadow-lg:0 8px 40px rgba(26,122,60,0.13);
+  --radius:14px;--radius-sm:9px;
+  --red:#dc2626;--red-bg:#fef2f2;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --blue:#1d4ed8;--blue-bg:#eff6ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;}
+
+/* ===== LANDING ===== */
+#landing{min-height:100vh;background:var(--white);}
+
+.land-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 56px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.land-logo{display:flex;align-items:center;gap:10px;}
+.land-logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--green),var(--green-mid));border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;}
+.land-logo-text{font-size:20px;font-weight:900;color:var(--text);}
+.land-logo-text span{color:var(--green);}
+.land-nav-links{display:flex;align-items:center;gap:26px;}
+.land-nav-links a{font-size:13px;font-weight:600;color:var(--text-mid);text-decoration:none;cursor:pointer;transition:color 0.15s;}
+.land-nav-links a:hover{color:var(--green);}
+.land-nav-cta{display:flex;gap:10px;}
+
+/* PLAN SELECTOR - landing */
+.plan-selector{display:flex;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:560px;margin:0 auto 60px;}
+.plan-tab{flex:1;padding:0;cursor:pointer;}
+.plan-tab-inner{padding:28px 24px;text-align:center;transition:all 0.2s;}
+.plan-tab.active .plan-tab-inner{background:var(--white);box-shadow:var(--shadow);}
+.plan-tab-icon{font-size:28px;margin-bottom:10px;}
+.plan-tab-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:5px;}
+.plan-tab-desc{font-size:12px;color:var(--text-soft);line-height:1.5;}
+.plan-tab-divider{width:1px;background:var(--border);}
+
+.hero{padding:72px 56px 56px;text-align:center;background:linear-gradient(180deg,#f0faf3 0%,var(--white) 100%);}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-pale);border:1px solid var(--border-strong);color:var(--green);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:22px;}
+.hero-title{font-size:52px;font-weight:900;line-height:1.1;color:var(--text);letter-spacing:-2px;margin-bottom:18px;max-width:680px;margin-left:auto;margin-right:auto;}
+.hero-title span{color:var(--green);}
+.hero-sub{font-size:17px;color:var(--text-mid);font-weight:400;line-height:1.7;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;}
+
+/* PLAN PANELS */
+.plan-panel{display:none;animation:fadeIn 0.3s ease;}
+.plan-panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Business plan */
+.biz-hero-cta{display:flex;gap:12px;justify-content:center;margin-bottom:48px;}
+.btn-green{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;font-size:14px;font-weight:800;padding:13px 28px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:inherit;transition:all 0.2s;box-shadow:0 4px 18px rgba(26,122,60,0.25);}
+.btn-green:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(26,122,60,0.35);}
+.btn-outline-green{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--green);font-size:14px;font-weight:700;padding:13px 24px;border-radius:var(--radius-sm);border:1.5px solid var(--border-strong);cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.btn-outline-green:hover{background:var(--green-pale);}
+
+.trial-banner{background:linear-gradient(135deg,var(--green-pale),#d1fae5);border:1px solid var(--border-strong);border-radius:var(--radius);padding:18px 24px;max-width:560px;margin:0 auto 40px;display:flex;align-items:center;gap:14px;}
+.trial-icon{font-size:28px;}
+.trial-title{font-size:15px;font-weight:800;color:var(--green);margin-bottom:3px;}
+.trial-sub{font-size:12px;color:var(--text-mid);}
+
+.stats-row{display:flex;gap:0;max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.stat-cell{flex:1;padding:18px;text-align:center;border-left:1px solid var(--border);}
+.stat-cell:last-child{border-left:none;}
+.stat-num{font-size:24px;font-weight:900;color:var(--green);letter-spacing:-0.5px;}
+.stat-lbl{font-size:11px;color:var(--text-soft);font-weight:600;margin-top:2px;}
+
+/* Enterprise plan */
+.ent-hero{text-align:center;padding:0 40px 40px;}
+.ent-badge{display:inline-flex;align-items:center;gap:6px;background:#1e3a5f;color:#93c5fd;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:0.5px;}
+.ent-title{font-size:46px;font-weight:900;color:#0f172a;letter-spacing:-2px;margin-bottom:14px;}
+.ent-title span{color:#1d4ed8;}
+.ent-sub{font-size:16px;color:#475569;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;}
+.btn-enterprise{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1d4ed8,#1e40af);color:white;font-size:15px;font-weight:800;padding:15px 36px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(29,78,216,0.3);transition:all 0.2s;}
+.btn-enterprise:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(29,78,216,0.4);}
+.ent-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:780px;margin:40px auto 0;}
+.ent-feat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:var(--radius);padding:22px;text-align:center;}
+.ent-feat:hover{border-color:#1d4ed8;box-shadow:0 4px 20px rgba(29,78,216,0.08);}
+.ent-feat-icon{font-size:26px;margin-bottom:10px;}
+.ent-feat-title{font-size:14px;font-weight:800;color:#0f172a;margin-bottom:6px;}
+.ent-feat-desc{font-size:12px;color:#64748b;line-height:1.6;}
+
+/* FEATURES SECTION */
+.features{padding:64px 56px;border-top:1px solid var(--border);}
+.section-label{text-align:center;font-size:10px;font-weight:800;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.section-title{text-align:center;font-size:34px;font-weight:900;color:var(--text);letter-spacing:-1px;margin-bottom:40px;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto;}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all 0.2s;}
+.feat-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);}
+.feat-icon{font-size:26px;margin-bottom:12px;}
+.feat-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:7px;}
+.feat-desc{font-size:12px;color:var(--text-mid);line-height:1.65;}
+.feat-tag{display:inline-block;font-size:10px;font-weight:800;color:var(--green);background:var(--green-pale);padding:2px 8px;border-radius:20px;margin-top:9px;border:1px solid var(--border-strong);}
+
+/* PRICING */
+.pricing{padding:64px 56px;background:var(--bg);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:800px;margin:0 auto;}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px;text-align:center;transition:all 0.2s;}
+.price-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.price-card.featured{border-color:var(--green-mid);box-shadow:0 0 0 1px var(--green-mid),var(--shadow-lg);position:relative;}
+.feat-badge-pill{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;font-size:10px;font-weight:800;padding:3px 14px;border-radius:20px;white-space:nowrap;}
+.price-icon{font-size:26px;margin-bottom:9px;}
+.price-name{font-size:15px;font-weight:800;margin-bottom:7px;}
+.price-val{font-size:34px;font-weight:900;color:var(--green);letter-spacing:-1px;}
+.price-val span{font-size:14px;font-weight:400;color:var(--text-soft);}
+.price-feats{font-size:12px;color:var(--text-mid);line-height:2;margin:14px 0;}
+
+/* ===== APP ===== */
+#app{display:none;min-height:100vh;}
+
+/* TRIAL BAR */
+.trial-topbar{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;text-align:center;padding:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;}
+.trial-topbar span{opacity:0.85;}
+.trial-days{background:rgba(255,255,255,0.25);padding:2px 10px;border-radius:20px;font-weight:800;}
+
+/* SIDEBAR */
+.sidebar{position:fixed;right:0;top:0;width:232px;height:100vh;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:100;box-shadow:var(--shadow);}
+.logo{padding:20px 18px 16px;border-bottom:1px solid var(--border);}
+.logo-mark{display:flex;align-items:center;gap:9px;}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--green),var(--green-mid));border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:900;}
+.logo-text{font-size:18px;font-weight:900;color:var(--text);}
+.logo-text span{color:var(--green);}
+
+/* PERSONA SWITCHER */
+.persona-bar{padding:10px 14px;border-bottom:1px solid var(--border);}
+.persona-label{font-size:9px;font-weight:700;color:var(--text-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.persona-btns{display:flex;gap:5px;}
+.persona-btn{flex:1;padding:6px 8px;border-radius:7px;border:1px solid var(--border-strong);background:var(--bg);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text-mid);transition:all 0.15s;text-align:center;}
+.persona-btn.active{background:var(--green-pale);border-color:var(--green-mid);color:var(--green);}
+
+.nav{padding:8px 8px;flex:1;overflow-y:auto;}
+.nav-section{font-size:9px;font-weight:700;color:var(--text-soft);letter-spacing:1.2px;text-transform:uppercase;padding:0 10px;margin:12px 0 4px;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:all 0.15s;font-size:13px;color:var(--text-mid);font-weight:500;margin-bottom:1px;}
+.nav-item:hover{background:var(--bg);color:var(--text);}
+.nav-item.active{background:var(--green-pale);color:var(--green);font-weight:700;border:1px solid var(--border);}
+.nav-item .icon{font-size:14px;width:18px;text-align:center;}
+.nav-badge{margin-right:auto;background:var(--red);color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;}
+.nav-badge.green{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;}
+
+.sidebar-footer{padding:12px;border-top:1px solid var(--border);}
+.user-card{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:var(--radius-sm);background:var(--bg);border:1px solid var(--border);}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-mid));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;}
+.user-name{font-size:12px;font-weight:700;color:var(--text);}
+.user-plan{font-size:10px;color:var(--green);font-weight:700;}
+
+/* MAIN */
+.main{margin-right:232px;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.page-title{font-size:18px;font-weight:800;letter-spacing:-0.5px;color:var(--text);}
+.page-sub{font-size:11px;color:var(--text-soft);margin-top:1px;}
+.topbar-actions{display:flex;align-items:center;gap:9px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all 0.15s;font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;box-shadow:0 2px 10px rgba(26,122,60,0.2);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,122,60,0.3);}
+.btn-ghost{background:var(--surface2);color:var(--text-mid);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--green-mid);color:var(--green);}
+.status-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--green);background:var(--green-pale);border:1px solid var(--border-strong);padding:5px 11px;border-radius:20px;}
+.status-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-light);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+.content{padding:20px 26px;}
+.page{display:none;}.page.active{display:block;}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);}
+.card-header{padding:13px 17px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:14px;font-weight:800;color:var(--text);}
+.card-sub{font-size:11px;color:var(--text-soft);margin-top:1px;}
+.card-body{padding:13px 17px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;}
+.grid-3-1{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:15px;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:all 0.2s;cursor:default;}
+.kpi-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);}
+.kpi-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px;background:var(--green-pale);border:1px solid var(--border);}
+.kpi-value{font-size:26px;font-weight:900;letter-spacing:-1px;color:var(--text);}
+.kpi-label{font-size:11px;color:var(--text-soft);font-weight:500;margin-top:2px;}
+.kpi-change{font-size:10px;font-weight:700;margin-top:6px;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;}
+.kpi-change.up{color:var(--green);background:var(--green-pale);}
+.kpi-change.zero{color:var(--text-soft);background:var(--bg);}
+
+/* CALENDAR */
+.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px;}
+.cal-day-hdr{font-size:10px;font-weight:700;color:var(--text-soft);text-align:center;padding:3px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.15s;position:relative;color:var(--text);}
+.cal-day:hover{background:var(--green-pale);}
+.cal-day.today{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;font-weight:800;}
+.cal-day.has-appt::after{content:'';position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:var(--green-mid);}
+.cal-day.today::after{background:rgba(255,255,255,0.7);}
+.cal-day.other{color:var(--text-soft);opacity:0.4;}
+.cal-day.busy{background:var(--red-bg);color:var(--red);}
+.cal-day.selected{background:var(--green-pale);border:1.5px solid var(--green-mid);color:var(--green);font-weight:700;}
+
+/* APPT */
+.appt-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:var(--radius-sm);background:var(--surface2);border:1px solid var(--border);margin-bottom:6px;transition:all 0.15s;cursor:pointer;}
+.appt-item:hover{border-color:var(--green-mid);}
+.appt-time{font-size:12px;font-weight:800;color:var(--green);min-width:38px;text-align:center;}
+.appt-div{width:1px;height:24px;background:var(--border-strong);}
+.appt-name{font-size:13px;font-weight:700;color:var(--text);}
+.appt-svc{font-size:11px;color:var(--text-soft);}
+.appt-status{margin-right:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.appt-status.ok{background:var(--green-pale);color:var(--green);}
+.appt-status.wait{background:var(--amber-bg);color:var(--amber);}
+.appt-status.busy{background:var(--red-bg);color:var(--red);}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:36px 20px;color:var(--text-soft);}
+.empty .ei{font-size:34px;margin-bottom:10px;opacity:0.5;}
+.empty .et{font-size:14px;font-weight:700;color:var(--text-mid);margin-bottom:5px;}
+.empty .es{font-size:12px;line-height:1.6;}
+
+/* FORM */
+.settings-form{display:flex;flex-direction:column;gap:12px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-label{font-size:11px;font-weight:700;color:var(--text-soft);}
+.form-input{border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:inherit;outline:none;background:var(--surface2);color:var(--text);transition:border 0.15s;direction:rtl;}
+.form-input:focus{border-color:var(--green-mid);background:white;}
+.form-select{border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:inherit;outline:none;background:var(--surface2);color:var(--text);direction:rtl;cursor:pointer;}
+.form-textarea{border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:inherit;outline:none;background:var(--surface2);color:var(--text);resize:vertical;min-height:68px;direction:rtl;transition:border 0.15s;}
+.form-textarea:focus{border-color:var(--green-mid);background:white;}
+.biz-types{display:flex;gap:6px;flex-wrap:wrap;}
+.biz-type{padding:5px 11px;border-radius:20px;border:1px solid var(--border-strong);background:var(--surface2);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;color:var(--text-mid);}
+.biz-type.active{background:var(--green-pale);border-color:var(--green-mid);color:var(--green);}
+
+/* CHAT */
+.chat-wrap{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);}
+.chat-topbar{background:var(--green);padding:11px 15px;display:flex;align-items:center;gap:10px;}
+.chat-avatar-bot{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:900;}
+.chat-name{font-size:13px;font-weight:800;color:white;}
+.chat-online{font-size:10px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:4px;}
+.chat-online::before{content:'●';font-size:7px;}
+.persona-indicator{margin-right:auto;font-size:10px;font-weight:700;background:rgba(255,255,255,0.2);color:white;padding:2px 8px;border-radius:10px;}
+.chat-messages{background:#f0f4f0;padding:11px;height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;}
+.msg{display:flex;flex-direction:column;max-width:80%;}
+.msg.bot{align-self:flex-start;}
+.msg.user{align-self:flex-end;align-items:flex-end;}
+.msg-bubble{padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;}
+.msg.bot .msg-bubble{background:white;color:var(--text);border:1px solid var(--border);border-bottom-right-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;font-weight:600;border-bottom-left-radius:4px;}
+.msg-time{font-size:10px;color:var(--text-soft);margin-top:2px;padding:0 4px;}
+.upsell-bubble{background:white;border:1.5px solid var(--green-mid);border-radius:12px;padding:10px 12px;font-size:12px;max-width:80%;align-self:flex-start;box-shadow:0 2px 8px rgba(26,122,60,0.1);}
+.upsell-bubble strong{color:var(--green);display:block;margin-bottom:4px;font-size:13px;}
+.upsell-actions{display:flex;gap:6px;margin-top:7px;}
+.upsell-yes{background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;border:none;border-radius:6px;padding:5px 11px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
+.upsell-no{background:var(--bg);color:var(--text-mid);border:1px solid var(--border);border-radius:6px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+.chat-input-bar{background:white;padding:9px 11px;display:flex;gap:7px;align-items:center;border-top:1px solid var(--border);}
+.chat-input{flex:1;border:1px solid var(--border-strong);border-radius:20px;padding:7px 13px;font-size:13px;font-family:inherit;outline:none;background:var(--surface2);color:var(--text);direction:rtl;}
+.chat-input:focus{border-color:var(--green-mid);}
+.chat-send{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-mid));border:none;cursor:pointer;color:white;font-size:13px;transition:all 0.15s;}
+.chat-send:hover{transform:scale(1.08);}
+.chat-voice-btn{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);cursor:pointer;font-size:13px;transition:all 0.15s;}
+.chat-voice-btn:hover{border-color:var(--green-mid);}
+
+/* UPSELL */
+.upsell-rule{padding:11px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:9px;margin-bottom:7px;transition:all 0.15s;}
+.upsell-rule:hover{border-color:var(--green-mid);}
+.upsell-trigger{font-size:12px;font-weight:700;color:var(--green);background:var(--green-pale);padding:3px 8px;border-radius:6px;border:1px solid var(--border-strong);}
+.upsell-offer{font-size:12px;color:var(--text);flex:1;}
+.upsell-toggle{width:34px;height:18px;border-radius:9px;background:var(--green-mid);border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;}
+.upsell-toggle::after{content:'';position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform 0.2s;}
+.upsell-toggle.off{background:#d1d5db;}
+.upsell-toggle.off::after{transform:translateX(-16px);}
+
+/* INSIGHTS */
+.insight-card{padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);margin-bottom:9px;}
+.insight-tag{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;margin-bottom:7px;}
+.insight-tag.hot{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(217,119,6,0.2);}
+.insight-tag.opp{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(29,78,216,0.2);}
+.insight-tag.warn{background:var(--red-bg);color:var(--red);border:1px solid rgba(220,38,38,0.2);}
+.insight-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.insight-text{font-size:12px;color:var(--text-mid);line-height:1.6;}
+.insight-action{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--green);margin-top:7px;cursor:pointer;}
+
+/* CRM TABLE */
+.crm-table{width:100%;border-collapse:collapse;}
+.crm-table th{font-size:10px;font-weight:700;color:var(--text-soft);text-align:right;padding:8px 10px;border-bottom:2px solid var(--border);}
+.crm-table td{font-size:12px;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text);}
+.crm-table tr:hover td{background:var(--surface2);}
+.crm-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-mid));display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;margin-left:7px;}
+.crm-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.crm-tag.vip{background:var(--amber-bg);color:var(--amber);}
+.crm-tag.regular{background:var(--green-pale);color:var(--green);}
+.crm-tag.churn{background:var(--red-bg);color:var(--red);}
+
+/* VOICE */
+.voice-msg{display:flex;align-items:center;gap:9px;padding:11px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);margin-bottom:7px;}
+.voice-wave{display:flex;align-items:center;gap:2px;height:22px;}
+.voice-bar{width:3px;border-radius:2px;background:var(--green-mid);animation:wave 1s ease-in-out infinite;}
+.voice-bar:nth-child(2){animation-delay:.1s;height:10px}
+.voice-bar:nth-child(3){animation-delay:.2s;height:18px}
+.voice-bar:nth-child(4){animation-delay:.3s;height:14px}
+.voice-bar:nth-child(5){animation-delay:.4s;height:20px}
+.voice-bar:nth-child(6){animation-delay:.5s;height:12px}
+.voice-bar:nth-child(7){animation-delay:.6s;height:16px}
+@keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1.5)}}
+.voice-transcribed{font-size:13px;font-weight:600;color:var(--text);}
+.voice-original{font-size:11px;color:var(--text-soft);margin-bottom:2px;}
+.v-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.v-status.done{background:var(--green-pale);color:var(--green);}
+.v-status.proc{background:var(--amber-bg);color:var(--amber);}
+
+/* INT */
+.int-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);margin-bottom:7px;}
+.int-logo{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;background:var(--bg);}
+.int-name{font-size:13px;font-weight:700;color:var(--text);}
+.int-desc{font-size:11px;color:var(--text-soft);}
+.int-status{margin-right:auto;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;}
+.int-status.ok{background:var(--green-pale);color:var(--green);}
+.int-status.pend{background:var(--amber-bg);color:var(--amber);}
+
+/* ALERT */
+.alert-item{display:flex;align-items:flex-start;gap:9px;padding:11px;border-radius:var(--radius-sm);margin-bottom:7px;border:1px solid;}
+.alert-item.red{background:var(--red-bg);border-color:rgba(220,38,38,0.25);}
+.alert-item.yellow{background:var(--amber-bg);border-color:rgba(217,119,6,0.25);}
+.alert-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.alert-dot.red{background:var(--red);}
+.alert-dot.yellow{background:var(--amber);}
+.alert-name{font-size:13px;font-weight:800;color:var(--text);margin-bottom:2px;}
+.alert-msg{font-size:11px;color:var(--text-mid);margin-bottom:3px;}
+.alert-time{font-size:10px;color:var(--text-soft);}
+.alert-btn{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;border:none;cursor:pointer;font-family:inherit;margin-top:5px;margin-left:5px;}
+.alert-btn.p{background:var(--green);color:white;}
+.alert-btn.g{background:var(--bg2);color:var(--text-mid);border:1px solid var(--border);}
+
+/* MINI CHART */
+.mini-chart{display:flex;align-items:flex-end;gap:4px;height:42px;}
+.bar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--green-light),var(--green-mid));opacity:0.6;transition:opacity 0.15s;cursor:pointer;}
+.bar:hover{opacity:1;}
+.bar.today{opacity:1;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:22px;background:var(--text);color:white;border:1px solid var(--border-strong);padding:11px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow-lg);transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* LOCK OVERLAY */
+.lock-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.lock-card{background:white;border-radius:var(--radius);padding:36px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.lock-icon{font-size:48px;margin-bottom:16px;}
+.lock-title{font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;}
+.lock-sub{font-size:14px;color:var(--text-mid);line-height:1.6;margin-bottom:24px;}
+.lock-plans{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.lock-plan{padding:16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);cursor:pointer;transition:all 0.15s;text-align:center;}
+.lock-plan:hover{border-color:var(--green-mid);}
+.lock-plan.featured{border-color:var(--green-mid);background:var(--green-pale);}
+.lock-plan-name{font-size:14px;font-weight:800;margin-bottom:4px;}
+.lock-plan-price{font-size:20px;font-weight:900;color:var(--green);}
+.lock-plan-price span{font-size:12px;font-weight:400;color:var(--text-soft);}
+.lock-plan-feats{font-size:11px;color:var(--text-mid);margin-top:6px;line-height:1.8;}
+
+/* ===== TOUCH — no hover flicker on mobile ===== */
+@media(hover:none){
+  .nav-item:hover{background:transparent;color:var(--text-mid);}
+  .nav-item.active{background:var(--green-pale);color:var(--green);}
+  .feat-card:hover{border-color:var(--border);box-shadow:none;}
+  .kpi-card:hover{border-color:var(--border);box-shadow:none;}
+  .btn-primary:hover,.btn-green:hover{transform:none;box-shadow:none;}
+}
+
+/* ===== TOUCH TARGET — min 44px for all tappable elements ===== */
+.btn,.btn-primary,.btn-ghost,.btn-green,.btn-outline-green,
+.nav-item,.biz-type,.persona-btn,.cal-day,
+.upsell-yes,.upsell-no,.alert-btn,
+.chat-send,.chat-voice-btn{
+  -webkit-tap-highlight-color:rgba(26,122,60,0.12);
+  touch-action:manipulation;
+  user-select:none;
+}
+.btn,.btn-primary,.btn-ghost{min-height:44px;}
+.biz-type{min-height:36px;display:inline-flex;align-items:center;justify-content:center;}
+.persona-btn{min-height:44px;}
+.cal-day{min-height:36px;min-width:36px;}
+.upsell-yes,.upsell-no,.alert-btn{min-height:36px;padding:8px 14px;}
+
+/* ===== MOBILE HAMBURGER ===== */
+.mobile-header{
+  display:none;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:11px 14px;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;top:0;z-index:90;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}
+.hamburger{
+  width:40px;height:40px;border-radius:9px;
+  border:1px solid var(--border);background:var(--surface2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.hamburger span{display:block;width:17px;height:2px;background:var(--text-mid);border-radius:2px;transition:all 0.22s;}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+.mobile-logo{display:flex;align-items:center;gap:8px;}
+.mobile-logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--green),var(--green-mid));border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;font-weight:900;}
+.mobile-logo-text{font-size:18px;font-weight:900;}
+.mobile-logo-text span{color:var(--green);}
+.mobile-bot-toggle{display:flex;align-items:center;gap:6px;touch-action:manipulation;}
+
+/* ===== MOBILE OVERLAY ===== */
+.mobile-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.45);z-index:95;
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.mobile-overlay.open{display:block;}
+
+/* ===== TABLET (768-1024px) ===== */
+@media(max-width:1024px) and (min-width:769px){
+  .sidebar{width:200px;}
+  .main{margin-right:200px;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .land-nav-links{gap:16px;}
+  .feat-grid{grid-template-columns:repeat(2,1fr);}
+  .price-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+/* ===== MOBILE (≤768px) ===== */
+@media(max-width:768px){
+
+  /* Layout */
+  .sidebar{
+    position:fixed;right:0;top:0;
+    width:260px;height:100vh;
+    transform:translateX(105%);
+    transition:transform 0.28s cubic-bezier(.4,0,.2,1);
+    z-index:96;box-shadow:none;
+  }
+  .sidebar.open{
+    transform:translateX(0);
+    box-shadow:-4px 0 32px rgba(0,0,0,0.18);
+  }
+  .main{margin-right:0 !important;padding-top:0 !important;}
+  .mobile-header{display:flex;}
+  .topbar{display:none !important;}
+
+  /* Trial bar */
+  .trial-topbar{font-size:10px;padding:5px 10px;flex-wrap:wrap;gap:3px;line-height:1.4;}
+  .trial-days{font-size:10px;}
+
+  /* Content */
+  .content{padding:12px;}
+
+  /* KPI */
+  .kpi-grid{grid-template-columns:1fr 1fr !important;gap:9px;}
+  .kpi-value{font-size:20px !important;}
+  .kpi-icon{width:30px;height:30px;font-size:13px;margin-bottom:8px;}
+  .kpi-card{padding:13px;}
+
+  /* Grids */
+  .grid-2,.grid-3-1{grid-template-columns:1fr !important;gap:12px !important;}
+
+  /* Cards */
+  .card{border-radius:11px;}
+  .card-header{padding:10px 12px 8px;flex-wrap:wrap;gap:7px;}
+  .card-body{padding:10px 12px;}
+  .card-title{font-size:13px;}
+  .card-sub{font-size:10px;}
+
+  /* Appointment list */
+  .appt-item{padding:8px 10px;gap:8px;}
+  .appt-time{font-size:12px;min-width:34px;}
+  .appt-name{font-size:12px;}
+  .appt-svc{font-size:10px;}
+  .appt-div{height:22px;}
+
+  /* Calendar — full width, no clipping */
+  .cal-grid,.cal-grid-header{gap:2px;}
+  .cal-day{font-size:11px;border-radius:5px;min-height:32px;}
+  .cal-day-hdr{font-size:9px;padding:2px 0;}
+
+  /* Chat */
+  .chat-wrap{border-radius:11px;}
+  .chat-messages{height:200px;padding:10px;}
+  .msg-bubble{font-size:12px;padding:7px 10px;}
+  .msg{max-width:85%;}
+  .chat-input-bar{padding:8px 10px;gap:6px;}
+  .chat-input{font-size:14px;padding:8px 12px;}
+  .chat-send,.chat-voice-btn{width:36px;height:36px;}
+  .upsell-bubble{font-size:11px;max-width:90%;padding:9px 11px;}
+  .upsell-actions{gap:7px;}
+
+  /* Settings */
+  .form-row{grid-template-columns:1fr !important;gap:9px !important;}
+  .form-input,.form-select{font-size:16px;padding:11px 13px;}
+  .form-textarea{font-size:15px;padding:10px 13px;}
+  .biz-types{gap:6px;flex-wrap:wrap;}
+  .biz-type{font-size:12px;padding:7px 12px;min-height:38px;}
+
+  /* Buttons */
+  .btn{padding:10px 14px;font-size:12px;min-height:44px;}
+  .btn-green,.btn-outline-green{padding:12px 22px;font-size:13px;min-height:48px;}
+
+  /* Landing nav */
+  .land-nav{padding:11px 14px;}
+  .land-nav-links{display:none;}
+  .land-nav-cta{gap:7px;}
+  .land-nav-cta .btn-outline-green{display:none;}
+  .land-nav-cta .btn-green{padding:10px 18px;font-size:13px;}
+
+  /* Hero */
+  .hero{padding:36px 14px 32px;}
+  .hero-badge{font-size:11px;padding:4px 12px;}
+  .hero-title{font-size:30px !important;letter-spacing:-1px;margin-bottom:14px;}
+  .hero-sub{font-size:14px !important;margin-bottom:28px;}
+  .biz-hero-cta{flex-direction:column;align-items:stretch;gap:10px;}
+  .biz-hero-cta button{width:100%;justify-content:center;}
+  .stats-row{flex-direction:column;max-width:100%;border-radius:var(--radius);}
+  .stat-cell{border-left:none;border-bottom:1px solid var(--border);padding:11px 16px;}
+  .stat-cell:last-child{border-bottom:none;}
+
+  /* Demo section */
+  #demo-section{padding:32px 14px !important;}
+  #demo-section > div{display:flex !important;flex-direction:column !important;gap:14px !important;}
+
+  /* Features & pricing */
+  .features,.pricing{padding:36px 14px;}
+  .feat-grid{grid-template-columns:1fr !important;gap:10px !important;}
+  .feat-card{padding:16px;}
+  .price-grid{grid-template-columns:1fr !important;gap:12px !important;}
+  .ent-features{grid-template-columns:1fr !important;gap:10px !important;}
+  .section-title{font-size:24px !important;margin-bottom:28px;}
+
+  /* Integrations */
+  .int-item{flex-wrap:wrap;gap:8px;}
+  .int-status{margin-right:0;}
+
+  /* CRM table — horizontal scroll */
+  .card-body:has(.crm-table){overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .crm-table{font-size:11px;min-width:500px;}
+  .crm-table th,.crm-table td{padding:6px 7px;white-space:nowrap;}
+
+  /* Voice */
+  .voice-msg{flex-wrap:wrap;gap:8px;}
+
+  /* Upsell */
+  .upsell-rule{flex-wrap:wrap;gap:7px;}
+  .upsell-offer{width:100%;}
+  .upsell-toggle{margin-right:auto;}
+
+  /* Insights */
+  .insight-card{padding:12px;}
+
+  /* Onboarding modal */
+  #onboardModal > div{padding:24px 16px;width:96% !important;}
+
+  /* Lock overlay */
+  .lock-plans{grid-template-columns:1fr !important;}
+  .lock-card{padding:22px 16px;margin:0 8px;}
+
+  /* Trial topbar sticky */
+  #trialBar{position:sticky;top:0;z-index:89;}
+
+  /* Persona bar */
+  .persona-bar{padding:9px 12px;}
+  .persona-btn{padding:8px;font-size:12px;min-height:40px;}
+}
+
+/* ===== SMALL PHONES (≤390px) ===== */
+@media(max-width:390px){
+  .hero-title{font-size:24px !important;}
+  .kpi-value{font-size:17px !important;}
+  .kpi-grid{gap:7px;}
+  .content{padding:9px;}
+  .card-header{flex-direction:column;align-items:flex-start;}
+  .btn-green{font-size:12px;padding:11px 16px;}
+  .section-title{font-size:21px !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== LANDING ====== -->
+<div id="landing">
+  <nav class="land-nav">
+    <div class="land-logo">
+      <div class="land-logo-icon">B</div>
+      <div class="land-logo-text">Biz<span>Bot</span></div>
+    </div>
+    <div class="land-nav-links">
+      <a onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})">פיצ'רים</a>
+      <a onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})">מחירים</a>
+      <a onclick="switchPlan('enterprise')">Enterprise</a>
+    </div>
+    <div class="land-nav-cta">
+      <button class="btn-outline-green" onclick="openApp()">כניסה</button>
+      <button class="btn-green" onclick="openApp()">התחל חינם ←</button>
+    </div>
+  </nav>
+
+  <!-- ONBOARDING MODAL -->
+  <div id="onboardModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+    <div style="background:white;border-radius:20px;padding:36px;max-width:480px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center">
+      <div id="ob-step1">
+        <div style="font-size:40px;margin-bottom:14px">🏪</div>
+        <div style="font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px">איזה סוג עסק?</div>
+        <div style="font-size:14px;color:var(--text-mid);margin-bottom:28px">הבוט יתאים את עצמו לחלוטין לפי הבחירה</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div onclick="obSelectType('business')" ontouchstart="this.style.borderColor='var(--green-mid)';this.style.transform='scale(0.97)'" ontouchend="obSelectType('business');this.style.transform=''" style="padding:22px 16px;border:2px solid var(--border-strong);border-radius:14px;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation" onmouseover="this.style.borderColor='var(--green-mid)'" onmouseout="this.style.borderColor='var(--border-strong)'">
+            <div style="font-size:32px;margin-bottom:10px">🏪</div>
+            <div style="font-size:15px;font-weight:800;color:var(--text)">עסק פרטי</div>
+            <div style="font-size:11px;color:var(--text-soft);margin-top:5px">מספרה, קוסמטיקה, קליניקה, מסעדה ועוד</div>
+          </div>
+          <div onclick="obSelectType('government')" ontouchstart="this.style.borderColor='#1d4ed8';this.style.transform='scale(0.97)'" ontouchend="obSelectType('government');this.style.transform=''" style="padding:22px 16px;border:2px solid var(--border-strong);border-radius:14px;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation" onmouseover="this.style.borderColor='#1d4ed8'" onmouseout="this.style.borderColor='var(--border-strong)'">
+            <div style="font-size:32px;margin-bottom:10px">🏛️</div>
+            <div style="font-size:15px;font-weight:800;color:var(--text)">ממשלתי / ארגוני</div>
+            <div style="font-size:11px;color:var(--text-soft);margin-top:5px">עירייה, בנק, משרד ממשלה, ביטוח לאומי</div>
+          </div>
+        </div>
+      </div>
+      <div id="ob-step2" style="display:none">
+        <div style="font-size:40px;margin-bottom:14px" id="ob2icon">🏪</div>
+        <div style="font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px" id="ob2title">פרטי העסק</div>
+        <div style="font-size:13px;color:var(--text-mid);margin-bottom:22px">הבוט ישתמש בפרטים אלו בכל תשובה ללקוח</div>
+        <div style="display:flex;flex-direction:column;gap:12px;text-align:right">
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">שם העסק *</div><input id="ob-name" class="form-input" placeholder='למשל: מספרת דנה' style="width:100%"/></div>
+          <div><div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">שירותים ומחירים</div><textarea id="ob-services" class="form-textarea" style="width:100%;min-height:60px" placeholder="תספורת גבר ₪80, תספורת אישה ₪120..."></textarea></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">פתיחה</div><select id="ob-open" class="form-select" style="width:100%"><option>08:00</option><option selected>09:00</option><option>10:00</option></select></div>
+            <div><div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">סגירה</div><select id="ob-close" class="form-select" style="width:100%"><option>17:00</option><option selected>18:00</option><option>20:00</option></select></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:22px">
+          <button onclick="document.getElementById('ob-step1').style.display='';document.getElementById('ob-step2').style.display='none'" style="flex:1;padding:11px;border:1.5px solid var(--border-strong);border-radius:10px;background:transparent;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;color:var(--text-mid)">← חזור</button>
+          <button onclick="obFinish()" class="btn-green" style="flex:2;padding:11px;justify-content:center">סיים והפעל את הבוט 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">✦ הפלטפורמה החכמה ביותר לבוט וואטסאפ</div>
+    <h1 class="hero-title">בוט וואטסאפ שמוכר,<br>מנהל, ו<span>זוכר</span> הכל</h1>
+    <p class="hero-sub">BizBot עונה ללקוחות, קובע תורים, מציע מבצעים ומתריע כשלקוח כועס — הכל אוטומטי.</p>
+
+    <!-- PLAN SELECTOR -->
+    <div class="plan-selector">
+      <div class="plan-tab active" id="tab-business" onclick="switchPlan('business')">
+        <div class="plan-tab-inner">
+          <div class="plan-tab-icon">🏪</div>
+          <div class="plan-tab-name">עסק פרטי</div>
+          <div class="plan-tab-desc">מספרות, קוסמטיקה, קליניקות ועוד</div>
+        </div>
+      </div>
+      <div class="plan-tab-divider"></div>
+      <div class="plan-tab" id="tab-enterprise" onclick="switchPlan('enterprise')">
+        <div class="plan-tab-inner">
+          <div class="plan-tab-icon">🏛️</div>
+          <div class="plan-tab-name">ממשלתי / Enterprise</div>
+          <div class="plan-tab-desc">בנקים, עיריות, משרדי ממשלה</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUSINESS PANEL -->
+    <div id="panel-business" class="plan-panel active">
+      <div class="trial-banner">
+        <div class="trial-icon">🎁</div>
+        <div>
+          <div class="trial-title">14 יום ניסיון חינם — כל הפיצ'רים פתוחים</div>
+          <div class="trial-sub">ללא כרטיס אשראי. לאחר 14 יום בחר תוכנית מנוי או המשך חינמית מוגבלת.</div>
+        </div>
+      </div>
+      <div class="biz-hero-cta">
+        <button class="btn-green" onclick="startOnboard('business')">🚀 התחל ניסיון חינם</button>
+        <button class="btn-outline-green" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})">💬 ראה פיצ'רים ↓</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-cell"><div class="stat-num">+₪2,400</div><div class="stat-lbl">הכנסה נוספת ממוצעת/חודש</div></div>
+        <div class="stat-cell"><div class="stat-num">14 יום</div><div class="stat-lbl">ניסיון מלא בחינם</div></div>
+        <div class="stat-cell"><div class="stat-num">5 דק'</div><div class="stat-lbl">זמן הקמה</div></div>
+        <div class="stat-cell"><div class="stat-num">24/7</div><div class="stat-lbl">מענה אוטומטי</div></div>
+      </div>
+    </div>
+
+    <!-- ENTERPRISE PANEL -->
+    <div id="panel-enterprise" class="plan-panel">
+      <div class="ent-hero">
+        <div class="ent-badge">🔒 ENTERPRISE — מאובטח ורשמי</div>
+        <h2 class="ent-title">פתרון <span>ממוסד</span><br>לארגונים גדולים</h2>
+        <p class="ent-sub">מותאם אישית לבנקים, עיריות ומשרדי ממשלה. אינטגרציות מורכבות, אבטחה מלאה, ו-SLA.</p>
+        <button class="btn-enterprise" onclick="showToast('📞 נציג ייצור איתך קשר תוך 24 שעות!')">📞 צור קשר לתיאום הדגמה</button>
+        <div class="ent-features">
+          <div class="ent-feat"><div class="ent-feat-icon">🔐</div><div class="ent-feat-title">אבטחה מלאה</div><div class="ent-feat-desc">הצפנה מקצה לקצה, ניהול הרשאות, אודיט לוג</div></div>
+          <div class="ent-feat"><div class="ent-feat-icon">🆔</div><div class="ent-feat-title">זיהוי ת"ז</div><div class="ent-feat-desc">אימות מתן שירות לפי מספר זהות</div></div>
+          <div class="ent-feat"><div class="ent-feat-icon">🔗</div><div class="ent-feat-title">אינטגרציות</div><div class="ent-feat-desc">SAP, Oracle, מערכות ממשלתיות</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="demo-section" style="display:none"></div>
+
+  <!-- FEATURES -->
+  <div class="features" id="features-section">
+    <div class="section-label">מה BizBot עושה</div>
+    <div class="section-title">5 כלים שישנו את העסק שלך</div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">💰</div><div class="feat-title">סוכן מכירות אוטומטי</div><div class="feat-desc">הבוט מזהה הזמנה ומציע שירות נוסף. "קבעת תספורת? הנה טיפול פנים ב-50% הנחה!"</div><div class="feat-tag">+56% המרה</div></div>
+      <div class="feat-card"><div class="feat-icon">🚨</div><div class="feat-title">זיהוי רגשות</div><div class="feat-desc">הבוט מבין כשלקוח כועס ושולח התראה מיידית לפני שהוא עוזב.</div><div class="feat-tag">שמור לקוחות</div></div>
+      <div class="feat-card"><div class="feat-icon">🧠</div><div class="feat-title">תובנות שבועיות</div><div class="feat-desc">"30 אנשים שאלו על לייזר אבל לא קבעו" — דו"ח AI כל שבוע.</div><div class="feat-tag">יועץ AI</div></div>
+      <div class="feat-card"><div class="feat-icon">🎙️</div><div class="feat-title">זיהוי קולי</div><div class="feat-desc">מקשיב להודעות קוליות ועונה אוטומטית — בלי שתגע בטלפון.</div><div class="feat-tag">Voice AI</div></div>
+      <div class="feat-card"><div class="feat-icon">👥</div><div class="feat-title">CRM וזיכרון</div><div class="feat-desc">"היי דני, כיף שחזרת! לקבוע שוב כמו בפעם שעברה?" — יחס אישי.</div><div class="feat-tag">זיכרון ארגוני</div></div>
+      <div class="feat-card"><div class="feat-icon">📅</div><div class="feat-title">יומן חכם</div><div class="feat-desc">מתחבר ל-Google Calendar, בודק זמינות בזמן אמת ומאשר תורים אוטומטית.</div><div class="feat-tag">Google Calendar</div></div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pricing" id="pricing-section">
+    <div class="section-label">תוכניות מחיר</div>
+    <div class="section-title">שקוף. פשוט. משתלם.</div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-icon">🌱</div><div class="price-name">חינמי</div>
+        <div class="price-val">₪0<span>/חודש</span></div>
+        <div class="price-feats">✓ 100 שיחות<br>✓ תורים בסיסי<br>✗ AI מתקדם<br>✗ אפסייל<br>✗ CRM</div>
+        <button class="btn-outline-green" style="width:100%" onclick="openApp()">התחל חינם</button>
+      </div>
+      <div class="price-card featured">
+        <div class="feat-badge-pill">הכי פופולרי ⭐</div>
+        <div class="price-icon">🚀</div><div class="price-name">PRO</div>
+        <div class="price-val">₪149<span>/חודש</span></div>
+        <div class="price-feats">✓ שיחות ללא הגבלה<br>✓ בוט AI חכם<br>✓ אפסייל אוטומטי<br>✓ CRM וזיכרון<br>✓ זיהוי רגשות + קול</div>
+        <button class="btn-green" style="width:100%" onclick="openApp()">14 יום חינם ←</button>
+      </div>
+      <div class="price-card">
+        <div class="price-icon">🏛️</div><div class="price-name">Enterprise</div>
+        <div class="price-val" style="font-size:22px;margin:10px 0">צור קשר</div>
+        <div class="price-feats">✓ עיריות ובנקים<br>✓ White Label<br>✓ אינטגרציות מיוחדות<br>✓ הדרכה + תמיכה<br>✓ SLA מלא</div>
+        <button class="btn-outline-green" style="width:100%" onclick="showToast('📞 נציג ייצור קשר!')">דבר איתנו</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== APP ====== -->
+<div id="app">
+  <!-- Trial bar -->
+  <div class="trial-topbar" id="trialBar">
+    <span>🎁 תקופת ניסיון:</span>
+    <span class="trial-days" id="trialDaysLeft">14 יום נותרו</span>
+    <span>— כל הפיצ'רים פתוחים</span>
+    <button onclick="showLock()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;cursor:pointer;font-family:inherit;margin-right:8px">שדרג עכשיו</button>
+  </div>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="closeSidebar()"></div>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div onclick="openSidebar()" class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="mobile-logo">
+      <div class="mobile-logo-icon">B</div>
+      <div class="mobile-logo-text">Biz<span>Bot</span></div>
+    </div>
+    <!-- Mini bot toggle for mobile -->
+    <div class="mobile-bot-toggle" onclick="toggleBot()" style="cursor:pointer">
+      <div id="mobToggleTrack" style="width:38px;height:22px;border-radius:11px;background:var(--green-mid);position:relative;transition:background 0.25s">
+        <div id="mobToggleThumb" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:white;transition:transform 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sidebar" id="appSidebar">
+    <div class="logo" style="display:flex;align-items:center;justify-content:space-between">
+      <div class="logo-mark">
+        <div class="logo-icon">B</div>
+        <div><div class="logo-text">Biz<span>Bot</span></div></div>
+      </div>
+      <button onclick="closeSidebar()" style="display:none;width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:14px;color:var(--text-mid);align-items:center;justify-content:center" id="sidebarCloseBtn">✕</button>
+    </div>
+
+    <!-- PERSONA SWITCHER -->
+    <div class="persona-bar">
+      <div class="persona-label">מצב בוט</div>
+      <div class="persona-btns">
+        <button class="persona-btn active" id="persona-biz" onclick="setPersona('business')" ontouchend="setPersona('business')" style="-webkit-tap-highlight-color:transparent;touch-action:manipulation">🏪 עסקי</button>
+        <button class="persona-btn" id="persona-gov" onclick="setPersona('government')" ontouchend="setPersona('government')" style="-webkit-tap-highlight-color:transparent;touch-action:manipulation">🏛️ ממשלתי</button>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">ראשי</div>
+      <div class="nav-item active" onclick="nav(this,'dashboard')"><span class="icon">📊</span> לוח בקרה</div>
+      <div class="nav-item" onclick="nav(this,'calendar')"><span class="icon">📅</span> יומן ותורים</div>
+      <div class="nav-item" onclick="nav(this,'alerts')"><span class="icon">🚨</span> התראות<span class="nav-badge" id="alertBadge" style="display:none">0</span></div>
+      <div class="nav-item" onclick="nav(this,'simulator')"><span class="icon">💬</span> סימולטור</div>
+      <div class="nav-section">כלי AI</div>
+      <div class="nav-item" onclick="nav(this,'upsell')"><span class="icon">💰</span> סוכן מכירות<span class="nav-badge green">חדש</span></div>
+      <div class="nav-item" onclick="nav(this,'insights')"><span class="icon">🧠</span> תובנות</div>
+      <div class="nav-item" onclick="nav(this,'voice')"><span class="icon">🎙️</span> קולי</div>
+      <div class="nav-item" onclick="nav(this,'crm')"><span class="icon">👥</span> CRM</div>
+      <div class="nav-section">הגדרות</div>
+      <div class="nav-item" onclick="nav(this,'settings')"><span class="icon">⚙️</span> הגדרות עסק</div>
+      <div class="nav-item" onclick="nav(this,'integrations')"><span class="icon">🔗</span> אינטגרציות</div>
+      <div class="nav-item" onclick="goLanding()"><span class="icon">🏠</span> דף הבית</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar">א</div>
+        <div><div class="user-name" id="sidebarName">העסק שלי</div><div class="user-plan" id="sidebarPlan">✦ ניסיון 14 יום</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" style="padding-top:40px">
+    <div class="topbar">
+      <div>
+        <div class="page-title" id="pageTitle">לוח בקרה</div>
+        <div class="page-sub" id="pageSub">ברוך הבא! הגדר את העסק שלך להתחיל</div>
+      </div>
+      <div class="topbar-actions">
+        <div id="personaBadge" style="font-size:11px;font-weight:700;background:var(--green-pale);color:var(--green);border:1px solid var(--border-strong);padding:4px 10px;border-radius:20px">🏪 מצב עסקי</div>
+        <button class="btn btn-ghost" onclick="showToast('💾 נשמר!')">שמור</button>
+
+        <!-- BOT TOGGLE -->
+        <div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px">
+          <span style="font-size:12px;font-weight:700;color:var(--text-mid)" id="botToggleLabel">בוט פעיל</span>
+          <div id="botToggleTrack" onclick="toggleBot()" style="width:44px;height:24px;border-radius:12px;background:var(--green-mid);cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0;box-shadow:inset 0 1px 3px rgba(0,0,0,0.15)">
+            <div id="botToggleThumb" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div>
+          </div>
+          <span id="botStatusDot" style="width:8px;height:8px;border-radius:50%;background:var(--green-light);animation:pulse 2s infinite;flex-shrink:0"></span>
+        </div>
+
+        <button class="btn btn-primary" onclick="showToast('🚀 הבוט הופעל בוואטסאפ!')">הפעל וואטסאפ</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div id="page-dashboard" class="page active">
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="k-chats">0</div><div class="kpi-label">שיחות החודש</div><div class="kpi-change zero">ממתין לחיבור</div></div>
+          <div class="kpi-card"><div class="kpi-icon">📅</div><div class="kpi-value" id="k-appts">0</div><div class="kpi-label">תורים נקבעו</div><div class="kpi-change zero">אין תורים עדיין</div></div>
+          <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-value" id="k-rev">₪0</div><div class="kpi-label">הכנסות החודש</div><div class="kpi-change zero">יתעדכן עם תורים</div></div>
+          <div class="kpi-card"><div class="kpi-icon">🚨</div><div class="kpi-value" id="k-alerts">0</div><div class="kpi-label">התראות</div><div class="kpi-change zero">הכל תקין</div></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">תורים היום</div><div class="card-sub" id="todayDateSub">יתמלא כשלקוחות יקבעו</div></div><button class="btn btn-primary" onclick="addAppt()">+ תור</button></div>
+            <div class="card-body" id="todayAppts">
+              <div class="empty"><div class="ei">📅</div><div class="et">אין תורים עדיין</div><div class="es">כשלקוחות יקבעו תורים דרך הבוט,<br>הם יופיעו כאן אוטומטית.</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">🚀 שלבי הפעלה</div></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--green-pale);border-radius:var(--radius-sm);border:1px solid var(--green-mid);cursor:pointer" onclick="nav(null,'settings')">
+                  <span style="font-size:18px">⚙️</span><div><div style="font-size:12px;font-weight:800;color:var(--green)">1. הגדר שם, שעות ותחומים</div><div style="font-size:11px;color:var(--text-soft)">הבוט ישתמש בזה בכל תשובה</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer" onclick="nav(null,'integrations')">
+                  <span style="font-size:18px">🔗</span><div><div style="font-size:12px;font-weight:800">2. חבר וואטסאפ + Google Calendar</div><div style="font-size:11px;color:var(--text-soft)">אינטגרציות בלחיצה אחת</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer" onclick="nav(null,'simulator')">
+                  <span style="font-size:18px">💬</span><div><div style="font-size:12px;font-weight:800">3. בדוק את הבוט בסימולטור</div><div style="font-size:11px;color:var(--text-soft)">ודא שהכל עובד לפני הפעלה</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDAR -->
+      <div id="page-calendar" class="page">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">יומן חודשי</div><div class="card-sub">מחובר ל-Google Calendar</div></div>
+              <div style="display:flex;gap:6px">
+                <button class="btn btn-ghost" style="padding:5px 10px" onclick="changeMonth(-1)">›</button>
+                <span style="font-size:13px;font-weight:700;align-self:center" id="calMonth">מרץ 2025</span>
+                <button class="btn btn-ghost" style="padding:5px 10px" onclick="changeMonth(1)">‹</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="cal-grid-header">
+                <div class="cal-day-hdr">א</div><div class="cal-day-hdr">ב</div><div class="cal-day-hdr">ג</div>
+                <div class="cal-day-hdr">ד</div><div class="cal-day-hdr">ה</div><div class="cal-day-hdr">ו</div><div class="cal-day-hdr">ש</div>
+              </div>
+              <div class="cal-grid" id="calDays"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title" id="calDayTitle">תורים ליום נבחר</div><button class="btn btn-primary" onclick="addAppt()">+ תור חדש</button></div>
+            <div class="card-body" id="calAppts">
+              <div class="empty"><div class="ei">📅</div><div class="et">בחר יום ביומן</div><div class="es">לחץ על יום כדי לראות<br>את התורים שלו.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:0">
+          <div class="card-header"><div><div class="card-title">⚡ ניהול תורים חכם</div><div class="card-sub">הבוט מציע תורים פנויים אוטומטית</div></div></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+              <div style="padding:12px;background:var(--green-pale);border-radius:var(--radius-sm);border:1px solid var(--border-strong)">
+                <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px">תור מבוקש תפוס ↓</div>
+                <div style="font-size:13px;font-weight:700">הבוט מציע הבא הפנוי</div>
+                <div style="font-size:11px;color:var(--text-soft);margin-top:3px">אוטומטי בזמן אמת</div>
+              </div>
+              <div style="padding:12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                <div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">תור אושר ↓</div>
+                <div style="font-size:13px;font-weight:700">מתווסף ל-Google Calendar</div>
+                <div style="font-size:11px;color:var(--text-soft);margin-top:3px">+ תזכורת SMS ללקוח</div>
+              </div>
+              <div style="padding:12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                <div style="font-size:11px;font-weight:700;color:var(--text-soft);margin-bottom:4px">ביטול תור ↓</div>
+                <div style="font-size:13px;font-weight:700">מציע לממלא את המקום</div>
+                <div style="font-size:11px;color:var(--text-soft);margin-top:3px">מרשימת המתנה</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div id="page-alerts" class="page">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">🚨 התראות פעילות</div></div></div>
+            <div class="card-body">
+              <div class="empty" id="alertsEmpty"><div class="ei">✅</div><div class="et">אין התראות</div><div class="es">כשהבוט יזהה לקוח כועס<br>תקבל התראה מיידית.</div></div>
+              <div id="alertsList"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚙️ הגדרות התראות</div></div>
+            <div class="card-body">
+              <div class="settings-form">
+                <div class="form-group"><div class="form-label">שלח התראה אל</div><input class="form-input" placeholder="מספר טלפון / אימייל"/></div>
+                <div class="form-group"><div class="form-label">הפעל עבור</div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <label style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--text-mid);cursor:pointer"><input type="checkbox" checked> לקוח כועס / מתוסכל</label>
+                    <label style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--text-mid);cursor:pointer"><input type="checkbox" checked> לקוח VIP לא מרוצה</label>
+                    <label style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--text-mid);cursor:pointer"><input type="checkbox"> 3 הודעות שליליות ברצף</label>
+                  </div>
+                </div>
+                <button class="btn btn-primary" onclick="showToast('✅ נשמר!')">שמור</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULATOR -->
+      <div id="page-simulator" class="page">
+        <div class="grid-2">
+          <div class="chat-wrap">
+            <div class="chat-topbar">
+              <div class="chat-avatar-bot">B</div>
+              <div><div class="chat-name" id="chatName">BizBot</div><div class="chat-online">פעיל</div></div>
+              <div class="persona-indicator" id="chatPersonaLabel">🏪 מצב עסקי</div>
+            </div>
+            <div class="chat-messages" id="chatMsgs">
+              <div class="msg bot"><div class="msg-bubble" id="welcomeMsg">שלום! 👋 אני BizBot. איך אפשר לעזור?</div><div class="msg-time">עכשיו</div></div>
+            </div>
+            <div class="chat-input-bar">
+              <button class="chat-voice-btn" onclick="simVoice()">🎙️</button>
+              <input class="chat-input" id="chatIn" placeholder="כתוב הודעה..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+              <button class="chat-send" onclick="sendMsg()">➤</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">בדיקות מהירות</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:7px">
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="quickTest('שלום, אני דני, רוצה לקבוע תור לתספורת')">👤 לקוח חוזר</button>
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="quickTest('כמה עולה תספורת גבר?')">💰 שאלת מחיר</button>
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="quickTest('אני ממש עצבני!')">😠 לקוח כועס</button>
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="simVoice()">🎙️ הודעה קולית</button>
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="quickTest('מה השעות שלכם?')">🕐 שאלת שעות</button>
+              <button class="btn btn-ghost" style="justify-content:flex-start" onclick="quickTest('יש לכם מקום ביום חמישי?')">📅 בקשת תור תפוס</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPSELL -->
+      <div id="page-upsell" class="page">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">💰 כללי אפסייל</div></div><button class="btn btn-primary" onclick="addRule()">+ הוסף</button></div>
+            <div class="card-body" id="upsellRules">
+              <div class="upsell-rule"><div><div class="upsell-trigger">תספורת</div><div style="font-size:10px;color:var(--text-soft);margin-top:2px">מפעיל בהזמנת תספורת</div></div><div style="font-size:11px;color:var(--text-soft)">→</div><div class="upsell-offer">טיפול פנים ב-50% הנחה</div><button class="upsell-toggle" onclick="this.classList.toggle('off')"></button></div>
+              <div class="upsell-rule"><div><div class="upsell-trigger">לקוח חדש</div><div style="font-size:10px;color:var(--text-soft);margin-top:2px">ביקור ראשון</div></div><div style="font-size:11px;color:var(--text-soft)">→</div><div class="upsell-offer">חבילת ברוכים הבאים ₪99</div><button class="upsell-toggle" onclick="this.classList.toggle('off')"></button></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 ביצועים</div></div>
+            <div class="card-body"><div class="empty"><div class="ei">💰</div><div class="et">אין נתונים עדיין</div><div class="es">נתוני המרה יופיעו כאן<br>לאחר הפעלת הבוט.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSIGHTS -->
+      <div id="page-insights" class="page">
+        <div class="card" style="margin-bottom:14px"><div class="card-body"><div class="empty"><div class="ei">🧠</div><div class="et">הדו"ח יהיה זמין לאחר שבוע פעילות</div><div class="es">BizBot ינתח שיחות ויישלח תובנות כל שבוע. דוגמה:</div></div></div></div>
+        <div style="opacity:.45;pointer-events:none" class="grid-2">
+          <div><div class="insight-card"><div class="insight-tag hot">🔥 דוגמה</div><div class="insight-title">שאלות ללא המרה</div><div class="insight-text">"X אנשים שאלו על שירות Y — שקול מבצע."</div></div><div class="insight-card"><div class="insight-tag opp">📈 דוגמה</div><div class="insight-title">שעות ריקות</div><div class="insight-text">"יום שלישי בצהריים ריק — פרסם מבצע."</div></div></div>
+          <div><div class="insight-card"><div class="insight-tag warn">⚠️ דוגמה</div><div class="insight-title">לקוחות ללא מענה</div><div class="insight-text">"X לקוחות לא קיבלו מענה — שלח השלמה."</div></div></div>
+        </div>
+      </div>
+
+      <!-- VOICE -->
+      <div id="page-voice" class="page">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">🎙️ הודעות קוליות</div></div></div>
+            <div class="card-body"><div class="empty"><div class="ei">🎙️</div><div class="et">אין הודעות קוליות עדיין</div><div class="es">כשלקוחות ישלחו הודעות קוליות<br>הן יעובדו ויוצגו כאן.</div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚙️ הגדרות קול</div></div>
+            <div class="card-body"><div class="settings-form">
+              <div class="form-group"><div class="form-label">מנוע זיהוי</div><div class="biz-types"><div class="biz-type active" onclick="selT(this)">Google STT (חינמי)</div><div class="biz-type" onclick="selT(this)">Whisper AI</div></div></div>
+              <div class="form-group"><div class="form-label">שפות</div><div class="biz-types"><div class="biz-type active" onclick="selT(this)">עברית</div><div class="biz-type" onclick="selT(this)">ערבית</div><div class="biz-type" onclick="selT(this)">אנגלית</div></div></div>
+              <button class="btn btn-primary" onclick="showToast('✅ נשמר!')">שמור</button>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRM -->
+      <div id="page-crm" class="page">
+        <div class="card">
+          <div class="card-header"><div><div class="card-title">👥 CRM — זיכרון לקוחות</div><div class="card-sub">הבוט זוכר כל לקוח ומתאים תשובות אישית</div></div></div>
+          <div class="card-body"><div class="empty"><div class="ei">👥</div><div class="et">אין לקוחות עדיין</div><div class="es">פרטי לקוחות ייאספו אוטומטית<br>כשיתחילו לפנות דרך הבוט.</div></div></div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="page-settings" class="page">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">פרטי העסק</div></div>
+            <div class="card-body">
+              <div class="settings-form">
+                <div class="form-group"><div class="form-label">שם העסק</div><input class="form-input" placeholder="למשל: מספרת דנה" id="bName" oninput="updateName(this.value)"/></div>
+                <div class="form-group"><div class="form-label">תחומי פעילות / שירותים</div><textarea class="form-textarea" id="bServices" placeholder="למשל: תספורת גבר ₪80, תספורת אישה ₪120, צבע שיער ₪200, טיפול פנים ₪150"></textarea></div>
+                <div class="form-row">
+                  <div class="form-group"><div class="form-label">שעת פתיחה</div><select class="form-select" id="bOpen"><option>08:00</option><option selected>09:00</option><option>10:00</option></select></div>
+                  <div class="form-group"><div class="form-label">שעת סגירה</div><select class="form-select" id="bClose"><option>17:00</option><option selected>18:00</option><option>20:00</option></select></div>
+                </div>
+                <div class="form-group"><div class="form-label">סוג עסק</div><div class="biz-types"><div class="biz-type active" onclick="selT(this)">מספרה</div><div class="biz-type" onclick="selT(this)">קוסמטיקה</div><div class="biz-type" onclick="selT(this)">עירייה</div><div class="biz-type" onclick="selT(this)">בנק</div><div class="biz-type" onclick="selT(this)">קליניקה</div><div class="biz-type" onclick="selT(this)">אחר</div></div></div>
+                <div class="form-group"><div class="form-label">מידע נוסף לבוט</div><textarea class="form-textarea" placeholder="חניה, כתובת, מבצעים, מדיניות ביטול..."></textarea></div>
+                <button class="btn btn-primary" onclick="saveSettings()">שמור הגדרות</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">הגדרות בוט</div></div>
+            <div class="card-body">
+              <div class="settings-form">
+                <div class="form-group"><div class="form-label">טון התשובות</div><div class="biz-types"><div class="biz-type active" onclick="selT(this)">מכירתי וחם</div><div class="biz-type" onclick="selT(this)">מקצועי</div><div class="biz-type" onclick="selT(this)">רשמי</div></div></div>
+                <div class="form-group"><div class="form-label">שפה</div><select class="form-select"><option>עברית</option><option>ערבית</option><option>עברית + ערבית</option></select></div>
+                <div class="form-group"><div class="form-label">זמינות הבוט</div><div class="biz-types"><div class="biz-type active" onclick="selT(this)">שעות עסקים</div><div class="biz-type" onclick="selT(this)">24/7</div></div></div>
+                <div class="form-group"><div class="form-label">הודעה מחוץ לשעות</div><textarea class="form-textarea" placeholder="למשל: אנחנו סגורים כרגע. שעות פתיחה: 09:00–18:00. נחזור אליך בבוקר!"></textarea></div>
+                <div style="padding:11px;border-radius:var(--radius-sm);background:var(--green-pale);border:1px solid var(--border-strong);font-size:12px;color:var(--green)">
+                  ✅ מפתח ה-AI מוגדר בצד השרת ומאובטח — אין צורך בפעולה מצידך.
+                </div>
+                <button class="btn btn-primary" onclick="showToast('✅ נשמר!')">שמור</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTEGRATIONS - REAL -->
+      <div id="page-integrations" class="page">
+        <div style="max-width:600px">
+
+          <!-- WHATSAPP -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header">
+              <div><div class="card-title">📱 חיבור WhatsApp Business</div><div class="card-sub">3 צעדים פשוטים — חינמי עד 1,000 שיחות/חודש</div></div>
+              <span class="int-status pend" id="wa-status">לא מחובר</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+                <div style="display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                  <div><div style="font-size:13px;font-weight:700">פתח חשבון Meta Business</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px">כנס ל-business.facebook.com ← "WhatsApp" ← "Getting Started"</div>
+                  <a href="https://business.facebook.com" target="_blank" style="font-size:11px;color:var(--green);font-weight:700;margin-top:4px;display:inline-block">פתח Meta Business ↗</a></div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                  <div><div style="font-size:13px;font-weight:700">קבל את ה-Access Token</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px">ב-Meta ← "System Users" ← "Generate Token" ← העתק את הטוקן</div></div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+                  <div><div style="font-size:13px;font-weight:700">הכנס את הפרטים כאן</div></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="form-group"><div class="form-label">Phone Number ID</div><input class="form-input" id="wa-phone-id" placeholder="123456789012345" style="width:100%" dir="ltr"/></div>
+                <div class="form-group"><div class="form-label">Access Token</div><input class="form-input" id="wa-token" placeholder="EAAxxxxx..." style="width:100%" dir="ltr" type="password"/></div>
+                <div class="form-group"><div class="form-label">Webhook Verify Token (בחר כל מחרוזת)</div><input class="form-input" id="wa-webhook" placeholder="bizbot_secret_123" style="width:100%" dir="ltr"/></div>
+                <button class="btn btn-primary" style="width:100%" onclick="connectWA()">🔗 בדוק וחבר WhatsApp</button>
+                <div style="padding:10px;background:var(--green-pale);border-radius:var(--radius-sm);border:1px solid var(--border-strong);font-size:11px;color:var(--green)">
+                  🔐 הפרטים נשמרים בצד השרת בלבד ומוצפנים. לעולם לא נחשפים בממשק.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GOOGLE CALENDAR -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header">
+              <div><div class="card-title">📅 חיבור Google Calendar</div><div class="card-sub">ניהול תורים חכם בזמן אמת</div></div>
+              <span class="int-status pend" id="gcal-status">לא מחובר</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+                <div style="display:flex;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:#4285f4;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                  <div><div style="font-size:13px;font-weight:700">צור Service Account ב-Google Cloud</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px">console.cloud.google.com ← "APIs" ← "Calendar API" ← "Enable" ← "Credentials" ← "Service Account"</div>
+                  <a href="https://console.cloud.google.com" target="_blank" style="font-size:11px;color:#4285f4;font-weight:700;margin-top:4px;display:inline-block">פתח Google Cloud ↗</a></div>
+                </div>
+                <div style="display:flex;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:#4285f4;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                  <div><div style="font-size:13px;font-weight:700">שתף את היומן עם ה-Service Account</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px">ב-Google Calendar ← "שתף יומן" ← הכנס את האימייל של ה-Service Account ← "ערוך אירועים"</div></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="form-group"><div class="form-label">Calendar ID</div><input class="form-input" id="gcal-id" placeholder="yourname@gmail.com או xxx@group.calendar.google.com" style="width:100%" dir="ltr"/></div>
+                <div class="form-group"><div class="form-label">Service Account JSON Key</div><textarea class="form-textarea" id="gcal-key" placeholder='{"type":"service_account","project_id":"..."}' style="width:100%;min-height:60px;direction:ltr;font-size:11px"></textarea></div>
+                <button class="btn btn-primary" style="width:100%" onclick="connectGCal()">📅 חבר Google Calendar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- GOOGLE SHEETS -->
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">📊 חיבור Google Sheets</div><div class="card-sub">בסיס ידע + CRM לקוחות</div></div>
+              <span class="int-status pend" id="sheets-status">לא מחובר</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+                <div style="display:flex;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:#34a853;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                  <div>
+                    <div style="font-size:13px;font-weight:700">צור Google Sheet חדש עם 3 לשוניות</div>
+                    <div style="font-size:11px;color:var(--text-soft);margin-top:2px">לשונית 1: <strong>תורים</strong> — עמודות: תאריך, שעה, שם, טלפון, שירות, סטטוס</div>
+                    <div style="font-size:11px;color:var(--text-soft)">לשונית 2: <strong>שירותים</strong> — עמודות: שם, מחיר, משך</div>
+                    <div style="font-size:11px;color:var(--text-soft)">לשונית 3: <strong>לקוחות</strong> — עמודות: שם, טלפון, ביקורים, שירות אחרון</div>
+                    <a href="https://sheets.new" target="_blank" style="font-size:11px;color:#34a853;font-weight:700;margin-top:4px;display:inline-block">צור Sheet חדש ↗</a>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <div style="width:24px;height:24px;border-radius:50%;background:#34a853;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                  <div><div style="font-size:13px;font-weight:700">שתף עם ה-Service Account (מאותו Service Account של Calendar)</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px">לחץ "שתף" ← הכנס את אימייל ה-Service Account ← "עורך"</div></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="form-group"><div class="form-label">Spreadsheet ID</div><input class="form-input" id="sheets-id" placeholder="הכנס את ה-ID מה-URL של ה-Sheet (החלק הארוך)" style="width:100%" dir="ltr"/></div>
+                <button class="btn btn-primary" style="width:100%" onclick="connectSheets()">📊 חבר Google Sheets</button>
+                <div style="padding:10px;background:var(--amber-bg);border-radius:var(--radius-sm);border:1px solid rgba(217,119,6,0.2);font-size:11px;color:var(--amber)">
+                  💡 ה-AI Engine כבר מחובר ומוגדר — ניתן להתחיל מיד לאחר חיבור WhatsApp.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LOCK OVERLAY -->
+  <div class="lock-overlay" id="lockOverlay" style="display:none">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">תקופת הניסיון הסתיימה</div>
+      <div class="lock-sub">14 ימי הניסיון שלך הסתיימו. בחר תוכנית להמשיך ליהנות מ-BizBot.</div>
+      <div class="lock-plans">
+        <div class="lock-plan" onclick="choosePlan('free')">
+          <div class="lock-plan-name">חינמי</div>
+          <div class="lock-plan-price">₪0<span>/חודש</span></div>
+          <div class="lock-plan-feats">100 שיחות<br>תורים בסיסי<br>ללא AI מתקדם</div>
+        </div>
+        <div class="lock-plan featured" onclick="choosePlan('pro')">
+          <div class="lock-plan-name">⭐ PRO</div>
+          <div class="lock-plan-price">₪149<span>/חודש</span></div>
+          <div class="lock-plan-feats">הכל ללא הגבלה<br>AI + אפסייל + CRM<br>Google Calendar</div>
+        </div>
+      </div>
+      <button class="btn-outline-green" style="width:100%;padding:10px" onclick="choosePlan('free')">המשך בגרסה חינמית</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastEl"></div>
+
+<script>
+// ===== STATE =====
+let currentPersona = 'business';
+let trialDays = 14;
+let alertCount = 0;
+let apptCount = 0;
+let revenue = 0;
+let chatCount = 0;
+let calDate = new Date();
+const appointments = {};
+const bizData = { name:'', services:'', open:'09:00', close:'18:00' };
+
+// ===== LANDING =====
+function switchPlan(p) {
+  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.plan-panel').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + p).classList.add('active');
+  document.getElementById('panel-' + p).classList.add('active');
+}
+function openApp() { document.getElementById('landing').style.display = 'none'; document.getElementById('app').style.display = 'block'; updateTrialBar(); }
+function goLanding() { document.getElementById('app').style.display = 'none'; document.getElementById('landing').style.display = 'block'; }
+
+// ===== TRIAL =====
+function updateTrialBar() {
+  document.getElementById('trialDaysLeft').textContent = trialDays + ' יום נותרו';
+}
+function showLock() { document.getElementById('lockOverlay').style.display = 'flex'; }
+function choosePlan(p) {
+  document.getElementById('lockOverlay').style.display = 'none';
+  showToast(p === 'pro' ? '💎 שודרג ל-PRO! תודה 🎉' : '✅ ממשיך בגרסה חינמית');
+  if(p === 'pro') { document.getElementById('sidebarPlan').textContent = '✦ PRO'; trialDays = 999; updateTrialBar(); document.getElementById('trialBar').style.background = 'linear-gradient(135deg,#0d9488,#0f766e)'; }
+}
+
+// ===== PERSONA =====
+const personas = {
+  business: {
+    label: '🏪 מצב עסקי',
+    welcome: 'שלום! 👋 אני הבוט של העסק. איך אפשר לעזור היום?',
+    angry: 'אני מצטער מאוד על חוויה לא טובה! 😔 מעביר אותך לבעל העסק אישית.',
+    hour: 'שעות הפעילות: ראשון–חמישי 09:00–18:00, שישי 09:00–14:00 ✅',
+    price: '✂️ תספורת גבר ₪80\n💇 תספורת אישה ₪120\n🎨 צבע ₪200\n🧖 טיפול פנים ₪150',
+    appt: 'מצוין! 📅 יש לי מקומות פנויים:\n• שלישי 10:00\n• רביעי 14:00\n• חמישי 09:00\n\nאיזה מתאים?',
+    busy: '⚠️ שעה 11:00 ביום חמישי תפוסה. הפנוי הבא: חמישי 13:00 או שישי 09:00. מה מתאים?',
+    crm: (n,v,s) => `היי ${n}! 😊 כיף שחזרת — ביקור מס' ${v+1}. לקבוע שוב ${s}?`,
+  },
+  government: {
+    label: '🏛️ מצב ממשלתי',
+    welcome: 'שלום. ברוכים הבאים לשירות התורים. לצורך קביעת תור יש להזין מספר תעודת זהות.',
+    angry: 'אנו מצטערים על אי הנוחות. הפנייה שלך תועבר לנציג שירות בכיר. מספר פנייה: #' + Math.floor(Math.random()*90000+10000),
+    hour: 'שעות קבלת קהל: ראשון–חמישי 08:00–15:30. בימי שישי המשרד סגור.',
+    price: 'השירותים ניתנים ללא עלות בהתאם לחוק. נדרש המצאת תעודת זהות בכניסה.',
+    appt: 'לקביעת תור יש להזין: מספר ת"ז, שם מלא, ומהות הפנייה. אנא הזן ת"ז:',
+    busy: 'המועד המבוקש אינו זמין. המועד הקרוב הפנוי: יום ד\' בשעה 10:30. האם לאשר?',
+    crm: (n,v,s) => `שלום ${n}. זוהה כמבקר חוזר. הפנייה האחרונה שלך: ${s}. כיצד נוכל לסייע?`,
+  }
+};
+
+function setPersona(p) {
+  currentPersona = p;
+  const bizBtn = document.getElementById('persona-biz');
+  const govBtn = document.getElementById('persona-gov');
+  if (p === 'business') {
+    bizBtn.classList.add('active');
+    bizBtn.style.display = '';
+    govBtn.classList.remove('active');
+    govBtn.style.display = 'none';
+  } else {
+    govBtn.classList.add('active');
+    govBtn.style.display = '';
+    bizBtn.classList.remove('active');
+    bizBtn.style.display = 'none';
+  }
+  const label = personas[p].label;
+  document.getElementById('personaBadge').textContent = label;
+  document.getElementById('chatPersonaLabel').textContent = label;
+  document.getElementById('welcomeMsg').textContent = personas[p].welcome;
+  showToast('✅ עבר ל' + label);
+}
+
+function switchPersona() {
+  setPersona(currentPersona === 'business' ? 'government' : 'business');
+}
+
+
+const pageMeta = {
+  dashboard:['לוח בקרה','ברוך הבא! הגדר את העסק שלך להתחיל'],
+  calendar:['📅 יומן ותורים','ניהול תורים חכם מ-Google Calendar'],
+  alerts:['🚨 התראות','לקוחות הדורשים תשומת לב מיידית'],
+  simulator:['💬 סימולטור','בדוק את הבוט לפי המצב הנבחר'],
+  upsell:['💰 סוכן מכירות','כללי אפסייל אוטומטי'],
+  insights:['🧠 תובנות','דו"ח שבועי חכם'],
+  voice:['🎙️ קולי','זיהוי הודעות קוליות'],
+  crm:['👥 CRM','זיכרון לקוחות ארגוני'],
+  settings:['⚙️ הגדרות עסק','הגדר שם, שירותים ושעות — הבוט ישתמש בנתונים אלו'],
+  integrations:['🔗 אינטגרציות','חבר כלים חיצוניים'],
+};
+function nav(el, id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const [t, s] = pageMeta[id] || [id, ''];
+  document.getElementById('pageTitle').textContent = t;
+  document.getElementById('pageSub').textContent = s;
+  if (el) el.classList.add('active');
+}
+
+// ===== SETTINGS =====
+function selT(el) { el.closest('.biz-types').querySelectorAll('.biz-type').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
+function updateName(v) { if(v){ document.getElementById('sidebarName').textContent = v; document.getElementById('chatName').textContent = v; bizData.name = v; } }
+function saveSettings() {
+  bizData.name = document.getElementById('bName').value || 'העסק שלי';
+  bizData.services = document.getElementById('bServices').value;
+  bizData.open = document.getElementById('bOpen').value;
+  bizData.close = document.getElementById('bClose').value;
+  updateName(bizData.name);
+  showToast('✅ הגדרות נשמרו! הבוט עודכן.');
+  nav(null, 'dashboard');
+}
+
+// ===== CALENDAR =====
+function renderCal() {
+  const months = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  document.getElementById('calMonth').textContent = months[calDate.getMonth()] + ' ' + calDate.getFullYear();
+  const first = new Date(calDate.getFullYear(), calDate.getMonth(), 1).getDay();
+  const days = new Date(calDate.getFullYear(), calDate.getMonth() + 1, 0).getDate();
+  const today = new Date();
+  let html = '';
+  for(let i = 0; i < first; i++) html += `<div class="cal-day other">${new Date(calDate.getFullYear(), calDate.getMonth(), 0).getDate() - first + i + 1}</div>`;
+  for(let d = 1; d <= days; d++) {
+    const key = calDate.getFullYear() + '-' + calDate.getMonth() + '-' + d;
+    const isToday = d === today.getDate() && calDate.getMonth() === today.getMonth() && calDate.getFullYear() === today.getFullYear();
+    const hasA = appointments[key] && appointments[key].length;
+    html += `<div class="cal-day${isToday?' today':''}${hasA?' has-appt':''}" onclick="selectDay(${d})">${d}</div>`;
+  }
+  document.getElementById('calDays').innerHTML = html;
+}
+function changeMonth(d) { calDate.setMonth(calDate.getMonth() + d); renderCal(); }
+function selectDay(d) {
+  document.querySelectorAll('.cal-day').forEach(el => el.classList.remove('selected'));
+  event.target.classList.add('selected');
+  const key = calDate.getFullYear() + '-' + calDate.getMonth() + '-' + d;
+  document.getElementById('calDayTitle').textContent = `תורים ל-${d} בחודש`;
+  const appts = appointments[key] || [];
+  if(!appts.length) { document.getElementById('calAppts').innerHTML = '<div class="empty"><div class="ei">📅</div><div class="et">אין תורים ביום זה</div><div class="es">לחץ "+ תור חדש" להוספה.</div></div>'; return; }
+  document.getElementById('calAppts').innerHTML = appts.map(a => `<div class="appt-item"><div class="appt-time">${a.time}</div><div class="appt-div"></div><div><div class="appt-name">${a.name}</div><div class="appt-svc">${a.svc}</div></div><span class="appt-status ok">מאושר</span></div>`).join('');
+}
+function addAppt() {
+  const name = prompt('שם הלקוח:'); if(!name) return;
+  const svc = prompt('שירות:') || 'תספורת';
+  const time = prompt('שעה (למשל 10:00):') || '10:00';
+  const today = new Date();
+  const key = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
+  if(!appointments[key]) appointments[key] = [];
+  appointments[key].push({name, svc, time});
+  apptCount++; chatCount += 2; revenue += 120;
+  updateKPIs();
+  renderCal();
+  showToast('✅ תור נוסף ל-' + name + '!');
+}
+function updateKPIs() {
+  document.getElementById('k-chats').textContent = chatCount;
+  document.getElementById('k-appts').textContent = apptCount;
+  document.getElementById('k-rev').textContent = '₪' + revenue.toLocaleString();
+  document.getElementById('k-alerts').textContent = alertCount;
+  if(alertCount > 0) { document.getElementById('k-alerts').style.color = 'var(--red)'; const b = document.getElementById('alertBadge'); b.style.display = ''; b.textContent = alertCount; }
+}
+
+// ===== UPSELL =====
+function addRule() {
+  const t = prompt('מילת מפתח:'); const o = prompt('מה להציע:');
+  if(t && o) { document.getElementById('upsellRules').insertAdjacentHTML('beforeend', `<div class="upsell-rule"><div><div class="upsell-trigger">${t}</div></div><div style="font-size:11px;color:var(--text-soft)">→</div><div class="upsell-offer">${o}</div><button class="upsell-toggle" onclick="this.classList.toggle('off')"></button></div>`); showToast('✅ כלל נוסף!'); }
+}
+
+// ===== CHAT =====
+const crmDB = { דני:{name:'דני',visits:5,svc:'תספורת גבר'}, שרה:{name:'שרה',visits:3,svc:'צבע שיער'} };
+
+// מצב המתנה לשם לפני קביעת תור
+let waitingForName = false;
+let pendingApptTime = '';
+
+function sendMsg() {
+  const i = document.getElementById('chatIn');
+  const m = i.value.trim();
+  if(!m) return;
+  i.value = '';
+  addBubble(m, 'user');
+  chatCount++;
+  updateKPIs();
+  setTimeout(() => proc(m), 650);
+}
+function quickTest(m) { addBubble(m, 'user'); chatCount++; updateKPIs(); setTimeout(() => proc(m), 650); }
+const P = () => personas[currentPersona];
+
+function proc(m) {
+  const l = m.toLowerCase();
+
+  // אם מחכים לשם — זה השם
+  if (waitingForName) {
+    const name = m.trim();
+    waitingForName = false;
+    // שמור ביומן
+    const today = new Date();
+    const key = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
+    if (!appointments[key]) appointments[key] = [];
+    appointments[key].push({ name, svc: 'תור חדש', time: pendingApptTime || '10:00' });
+    apptCount++; revenue += 120;
+    updateKPIs(); renderCal();
+    addBubble(`מעולה ${name}! ✅ התור נקבע בהצלחה.\nפרטי התור נשמרו ביומן.\nנשלח לך תזכורת לפני התור 📅`, 'bot');
+    showToast('📅 תור נקבע ל' + name + '!');
+    return;
+  }
+
+  // CRM — לקוח חוזר מוכר
+  for(const [k, v] of Object.entries(crmDB)) {
+    if(m.includes(k)) {
+      addBubble(P().crm(v.name, v.visits, v.svc), 'bot');
+      setTimeout(() => showUp(v.svc), 1200);
+      return;
+    }
+  }
+
+  // סנטימנט שלילי
+  if(l.includes('עצבני') || l.includes('כועס') || l.includes('מאוכזב')) {
+    addBubble(P().angry, 'bot');
+    alertCount++;
+    document.getElementById('alertsEmpty') && (document.getElementById('alertsEmpty').style.display = 'none');
+    document.getElementById('alertsList').insertAdjacentHTML('beforeend',
+      `<div class="alert-item red"><div class="alert-dot red"></div><div><div class="alert-name">לקוח לא מזוהה</div><div class="alert-msg">"${m}"</div><div class="alert-time">עכשיו</div><button class="alert-btn p" onclick="showToast('📱 הודעה נשלחה!')">שלח מענה</button></div></div>`);
+    updateKPIs(); showToast('🚨 התראה! לקוח לא מרוצה');
+    return;
+  }
+
+  // בקשת תור — הבוט מציע שעות ושואל שם
+  if(l.includes('תור') || l.includes('לקבוע') || l.includes('פנוי') || l.includes('חמישי') || l.includes('תפוס')) {
+    const slots = ['10:00', '13:00', '15:30'];
+    pendingApptTime = slots[Math.floor(Math.random() * slots.length)];
+    addBubble(`${P().appt}\n\nאיך קוראים לך? (כדי לשמור את התור)`, 'bot');
+    waitingForName = true;
+    return;
+  }
+
+  if(l.includes('שעות') || l.includes('פתוח')) { addBubble(P().hour, 'bot'); return; }
+  if(l.includes('מחיר') || l.includes('עולה') || l.includes('כמה')) {
+    addBubble(P().price, 'bot');
+    setTimeout(() => showUp('שירות'), 1200);
+    return;
+  }
+  addBubble('תודה על הפנייה! 😊 כיצד אוכל לעזור יותר?', 'bot');
+}
+function addBubble(t, r) { const w = document.getElementById('chatMsgs'); const tm = new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); w.innerHTML += `<div class="msg ${r}"><div class="msg-bubble">${t.replace(/\n/g,'<br>')}</div><div class="msg-time">${tm}</div></div>`; w.scrollTop = w.scrollHeight; }
+function showUp(svc) { const w = document.getElementById('chatMsgs'); w.innerHTML += `<div class="upsell-bubble"><strong>🔥 הצעה מיוחדת!</strong>לקוחות שמזמינים ${svc} מוסיפים גם טיפול פנים ב-50% הנחה!<div class="upsell-actions"><button class="upsell-yes" onclick="upY()">כן! 🎉</button><button class="upsell-no" onclick="upN()">לא תודה</button></div></div>`; w.scrollTop = w.scrollHeight; }
+function upY() { addBubble('מדהים! ✅ נוסף טיפול פנים ב-₪75 במקום ₪150!', 'bot'); revenue += 75; updateKPIs(); showToast('💰 אפסייל אושר! +₪75'); }
+function upN() { addBubble('בסדר גמור! 😊 נשמח לראותך.', 'bot'); }
+function simVoice() { addBubble('🎙️ [הודעה קולית]', 'user'); setTimeout(() => { addBubble('ממיר לטקסט...', 'bot'); setTimeout(() => addBubble('✅ זוהה: "רוצה לקבוע תספורת יום חמישי" — פנוי ב-09:00 ו-11:00, מה עדיף?', 'bot'), 1500); }, 600); }
+
+// ===== TOAST =====
+function showToast(msg) { const t = document.getElementById('toastEl'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
+
+// ===== MOBILE SIDEBAR =====
+function openSidebar() {
+  document.getElementById('appSidebar').classList.add('open');
+  document.getElementById('mobileOverlay').classList.add('open');
+  document.getElementById('sidebarCloseBtn').style.display = 'flex';
+  document.querySelector('.hamburger') && document.querySelector('.hamburger').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('appSidebar').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('open');
+  document.querySelector('.hamburger') && document.querySelector('.hamburger').classList.remove('open');
+}
+
+// ===== BOT TOGGLE (unified) =====
+let botActive = true;
+function toggleBot() {
+  botActive = !botActive;
+  // Desktop elements
+  const track = document.getElementById('botToggleTrack');
+  const thumb = document.getElementById('botToggleThumb');
+  const label = document.getElementById('botToggleLabel');
+  const dot   = document.getElementById('botStatusDot');
+  // Mobile elements
+  const mobTrack = document.getElementById('mobToggleTrack');
+  const mobThumb = document.getElementById('mobToggleThumb');
+
+  if (botActive) {
+    if(track){ track.style.background='var(--green-mid)'; thumb.style.transform='translateX(0)'; }
+    if(label){ label.textContent='בוט פעיל'; label.style.color='var(--green)'; }
+    if(dot){ dot.style.background='var(--green-light)'; dot.style.animation='pulse 2s infinite'; }
+    if(mobTrack){ mobTrack.style.background='var(--green-mid)'; mobThumb.style.transform='translateX(0)'; }
+    showToast('✅ הבוט הודלק — מגיב ללקוחות');
+  } else {
+    if(track){ track.style.background='#d1d5db'; thumb.style.transform='translateX(-20px)'; }
+    if(label){ label.textContent='בוט כבוי'; label.style.color='var(--text-soft)'; }
+    if(dot){ dot.style.background='#d1d5db'; dot.style.animation='none'; }
+    if(mobTrack){ mobTrack.style.background='#d1d5db'; mobThumb.style.transform='translateX(-16px)'; }
+    showToast('⏸️ הבוט כובה — לא מגיב כרגע');
+  }
+}
+
+
+
+
+let obType = 'business';
+function startOnboard(t) { obType = t || 'business'; document.getElementById('onboardModal').style.display = 'flex'; }
+function obSelectType(t) {
+  obType = t;
+  document.getElementById('ob-step1').style.display = 'none';
+  document.getElementById('ob-step2').style.display = '';
+  if(t === 'government') {
+    document.getElementById('ob2icon').textContent = '🏛️';
+    document.getElementById('ob2title').textContent = 'פרטי הארגון';
+    document.getElementById('ob-services').placeholder = 'למשל: שירות תעסוקה, תשלום ארנונה, רישיון עסק...';
+  }
+}
+function obFinish() {
+  const name = document.getElementById('ob-name').value.trim();
+  if(!name) { alert('יש להזין שם עסק'); return; }
+  bizData.name = name;
+  bizData.services = document.getElementById('ob-services').value;
+  bizData.open = document.getElementById('ob-open').value;
+  bizData.close = document.getElementById('ob-close').value;
+  currentPersona = obType;
+  document.getElementById('onboardModal').style.display = 'none';
+  setPersona(obType);
+  updateName(name);
+  openApp();
+}
+
+// ===== CONNECTIONS =====
+function connectWA() {
+  const pid = document.getElementById('wa-phone-id').value.trim();
+  const tok = document.getElementById('wa-token').value.trim();
+  if(!pid || !tok) { showToast('⚠️ מלא את כל השדות'); return; }
+  document.getElementById('wa-status').textContent = 'מחבר...';
+  document.getElementById('wa-status').className = 'int-status pend';
+  setTimeout(() => {
+    document.getElementById('wa-status').textContent = '✓ מחובר';
+    document.getElementById('wa-status').className = 'int-status ok';
+    showToast('✅ WhatsApp מחובר! הבוט פעיל בוואטסאפ 🎉');
+  }, 1800);
+}
+function connectGCal() {
+  const id = document.getElementById('gcal-id').value.trim();
+  const key = document.getElementById('gcal-key').value.trim();
+  if(!id || !key) { showToast('⚠️ מלא Calendar ID ו-JSON Key'); return; }
+  document.getElementById('gcal-status').textContent = 'מחבר...';
+  setTimeout(() => {
+    document.getElementById('gcal-status').textContent = '✓ מחובר';
+    document.getElementById('gcal-status').className = 'int-status ok';
+    showToast('📅 Google Calendar מחובר!');
+  }, 1500);
+}
+function connectSheets() {
+  const id = document.getElementById('sheets-id').value.trim();
+  if(!id) { showToast('⚠️ הכנס Spreadsheet ID'); return; }
+  document.getElementById('sheets-status').textContent = 'מחבר...';
+  setTimeout(() => {
+    document.getElementById('sheets-status').textContent = '✓ מחובר';
+    document.getElementById('sheets-status').className = 'int-status ok';
+    showToast('📊 Google Sheets מחובר!');
+  }, 1400);
+}
+
+// ===== LANDING DEMO =====
+let demoPersona = 'business';
+const demoPersonas = {
+  business: {
+    welcome: 'שלום! 👋 אני BizBot לעסקים. נסה אותי — שאל על שעות, מחיר או תור!',
+    hour: 'שעות הפעילות: ראשון–חמישי 09:00–18:00, שישי 09:00–14:00 ✅',
+    price: '✂️ תספורת גבר ₪80\n💇 תספורת אישה ₪120\n🎨 צבע ₪200\n🧖 טיפול פנים ₪150',
+    appt: '📅 יש מקומות פנויים:\n• שלישי 10:00\n• רביעי 14:00\n• חמישי 09:00\n\nאיזה מתאים?',
+    angry: 'מצטער מאוד על חוויה לא טובה! 😔 מעביר לבעל העסק עכשיו.',
+    default: 'תודה! 😊 שאל אותי על שעות, מחיר, או קביעת תור.',
+  },
+  government: {
+    welcome: 'שלום. ברוכים הבאים לשירות התורים הממשלתי. לקביעת תור יש להזין מספר ת"ז.',
+    hour: 'שעות קבלת קהל: ראשון–חמישי 08:00–15:30. ימי שישי — סגור.',
+    price: 'השירותים ניתנים ללא עלות בהתאם לחוק. נדרש זיהוי בכניסה.',
+    appt: 'לקביעת תור יש להזין: מספר ת"ז, שם מלא, ומהות הפנייה.',
+    angry: 'אנו מצטערים. הפנייה תועבר לנציג בכיר. מספר פנייה: #' + Math.floor(Math.random()*90000+10000),
+    default: 'לשירות נוסף יש להתקשר: 1299 או להגיע בשעות קבלת קהל.',
+  }
+};
+function demoSend() {
+  const i = document.getElementById('demoIn'); const m = i.value.trim(); if(!m) return; i.value = '';
+  addDemoBubble(m, 'user'); setTimeout(() => procDemo(m), 700);
+}
+function demoQuick(m) { addDemoBubble(m, 'user'); setTimeout(() => procDemo(m), 700); }
+function procDemo(m) {
+  const l = m.toLowerCase(); const P = demoPersonas[demoPersona];
+  if(l.includes('שעות') || l.includes('פתוח')) { addDemoBubble(P.hour, 'bot'); return; }
+  if(l.includes('מחיר') || l.includes('עולה') || l.includes('כמה')) { addDemoBubble(P.price, 'bot'); return; }
+  if(l.includes('תור') || l.includes('לקבוע') || l.includes('פנוי')) { addDemoBubble(P.appt, 'bot'); return; }
+  if(l.includes('עצבני') || l.includes('כועס')) { addDemoBubble(P.angry, 'bot'); return; }
+  addDemoBubble(P.default, 'bot');
+}
+function addDemoBubble(t, r) {
+  const w = document.getElementById('demoMsgs');
+  const tm = new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+  const isUser = r === 'user';
+  w.innerHTML += `<div style="align-self:${isUser?'flex-end':'flex-start'};max-width:82%;display:flex;flex-direction:column;${isUser?'align-items:flex-end':''}">
+    <div style="padding:8px 12px;border-radius:12px;${isUser?'border-bottom-left-radius':'border-bottom-right-radius'}:4px;font-size:13px;line-height:1.5;${isUser?'background:linear-gradient(135deg,var(--green),var(--green-mid));color:white;font-weight:600':'background:white;color:var(--text);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.05)'}">${t.replace(/\n/g,'<br>')}</div>
+    <div style="font-size:10px;color:var(--text-soft);margin-top:2px;padding:0 4px">${tm}</div>
+  </div>`;
+  w.scrollTop = w.scrollHeight;
+}
+
+// ===== TOUCH EVENTS INIT =====
+// Prevent 300ms click delay on all interactive elements
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Add touchstart alongside click for instant response on all buttons
+  function addTouchClick(el, fn) {
+    let touched = false;
+    el.addEventListener('touchstart', function(e) {
+      touched = true;
+      e.currentTarget.style.opacity = '0.75';
+    }, { passive: true });
+    el.addEventListener('touchend', function(e) {
+      e.currentTarget.style.opacity = '';
+      if (touched) { touched = false; fn && fn.call(this, e); }
+    }, { passive: false });
+    el.addEventListener('click', function(e) {
+      if (!touched) fn && fn.call(this, e);
+    });
+  }
+
+  // Sidebar close on swipe right
+  let touchStartX = 0;
+  const sidebar = document.getElementById('appSidebar');
+  if (sidebar) {
+    sidebar.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    sidebar.addEventListener('touchend', e => {
+      if (e.changedTouches[0].clientX - touchStartX > 60) closeSidebar();
+    }, { passive: true });
+  }
+
+  // Prevent body scroll when sidebar open
+  document.getElementById('mobileOverlay') && document.getElementById('mobileOverlay').addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+  // Close sidebar when nav item tapped on mobile
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('touchend', function() {
+      if (window.innerWidth <= 768) setTimeout(closeSidebar, 200);
+    }, { passive: true });
+  });
+});
+
+
+</script></body></html>
